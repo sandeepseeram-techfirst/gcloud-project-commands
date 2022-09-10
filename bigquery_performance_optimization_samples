@@ -1,0 +1,60 @@
+Performance tuning of BigQuery is usually carried out because we wish to reduce query execution times or cost.
+
+Performance tuning should be carried out only at the end of the development stage, and only if it is observed that typical queries take too long. It is far better to have flexible table schemas and elegant, readable, and maintainable queries than to obfuscate table layouts and queries in search of a tiny bit of performance. However, there will be instances where you do need to improve the performance of your queries, perhaps because they are carried out so often that small improvements are meaningful. Another aspect is that knowledge of performance tradeoffs can help you in deciding between alternative designs.
+
+
+@ Minimizing I/O
+
+@ Caching results of previous queries
+
+@ Performing efficient joins
+
+@ Avoid over-whelming single workers
+
+@ Using approximate aggregation functions
+
+
+Minimize I/O
+A query that computes the sum of three columns will be slower than a query that computes the sum of two columns, but most of the performance difference will be due to reading more data, not the extra addition. Therefore, a query that computes the mean of a column will be nearly as fast as a query whose aggregation method is to compute the variance of the data (even though computing variance requires BigQuery to keep track of both the sum and the sum of the squares) because most of the overhead of simple queries is caused by I/O, not by computation.
+
+# OPTIMIZED 
+SELECT
+  bike_id,
+  duration
+FROM
+  `bigquery-public-data`.london_bicycles.cycle_hire
+ORDER BY
+  duration DESC
+LIMIT
+  1
+
+# NOT OPTIMIZED 
+
+SELECT
+  *
+FROM
+  `bigquery-public-data`.london_bicycles.cycle_hire
+ORDER BY
+  duration DESC
+LIMIT
+  1
+
+# Reduce data being read
+
+SELECT
+  MIN(start_station_name) AS start_station_name,
+  MIN(end_station_name) AS end_station_name,
+  APPROX_QUANTILES(duration, 10)[OFFSET (5)] AS typical_duration,
+  COUNT(duration) AS num_trips
+FROM
+  `bigquery-public-data`.london_bicycles.cycle_hire
+WHERE
+  start_station_id != end_station_id
+GROUP BY
+  start_station_id,
+  end_station_id
+ORDER BY
+  num_trips DESC
+LIMIT
+  10
+
