@@ -1,0 +1,19 @@
+#git clone https://github.com/GoogleCloudPlatform/training-data-analyst 
+#set the devshell project ID 
+export DEVSHELL_PROJECT_ID=$(gcloud config get-value project) 
+
+!student-04-aa8ca78e27db@training-vm:~/training-data-analyst/courses/streaming/publish$ 
+gcloud pubsub topics create sandiego
+Created topic [Topic].
+
+gcloud pubsub subscriptions create --topic sandiego mySub1 
+
+gcloud pubsub subscriptions pull --auto-ack mySub1
+┌─────────────┬──────────────────┬────────────┐
+│     DATA    │    MESSAGE_ID    │ ATTRIBUTES │
+├─────────────┼──────────────────┼────────────┤
+│ hello again │ 5610678448272317 │            │
+└─────────────┴──────────────────┴────────────┘
+
+#to delete 
+gcloud pubsub subscriptions delete mySub1 
