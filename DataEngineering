@@ -1,0 +1,15 @@
+us-east1-composer-advanced--5e710392-bucket/dags
+
+DAGS_BUCKET=us-east1-composer-advanced--5e710392-bucket
+
+
+
+gcloud composer environments run composer-advanced-lab \
+--location us-east1 variables -- \
+set gcs_dest_bucket 96552634-eu
+
+
+
+
+96552634-us
+

@@ -1,0 +1,81 @@
+#Topics tested:
+
+Create a simple Dataproc job
+Create a simple DataFlow job
+Create a simple Dataprep job
+Perform one of the three Google machine learning backend API tasks  
+
+
+gs://cloud-training/gsp323/lab.csv
+
+
+[
+ {"type":"STRING","name":"guid"},
+        {"type":"BOOLEAN","name":"isActive"},
+        {"type":"STRING","name":"firstname"},
+        {"type":"STRING","name":"surname"},
+        {"type":"STRING","name":"company"},
+        {"type":"STRING","name":"email"},
+        {"type":"STRING","name":"phone"},
+        {"type":"STRING","name":"address"},
+        {"type":"STRING","name":"about"},
+        {"type":"TIMESTAMP","name":"registered"},
+        {"type":"FLOAT","name":"latitude"},
+        {"type":"FLOAT","name":"longitude"}
+]
+       
+
+       AIzaSyAJLByxyKaGYwvb8mokZaS_scmJSGmJpuw
+
+       export API_KEY=AIzaSyAJLByxyKaGYwvb8mokZaS_scmJSGmJpuw
+
+
+       {
+  "config": {
+      "encoding":"FLAC",
+      "languageCode": "en-US"
+  },
+  "audio": {
+      "uri":"gs://cloud-training/gsp323/task4.flac"
+  }
+}
+
+
+gsutil cp task4-gcs.result gs://qwiklabs-gcp-02-7207b05c1fb0-marking/task4-gcs-930.result
+
+
+gsutil cp result.json gs://qwiklabs-gcp-02-7207b05c1fb0-marking/task4-gcs-930.result
+
+
+
+curl -s -X POST -H "Content-Type: application/json" --data-binary @gsc-request.json \
+"https://speech.googleapis.com/v1/speech:recognize?key=${API_KEY}" > result.json
+
+
+
+
+################################################################################################
+
+TASK #1 
+
+
+export API_KEY=AIzaSyAz23lq25BTZAUUUrx8DoA5sNxp_k4hiew 
+
+
+{
+    "config": {
+        "encoding":"FLAC",
+        "languageCode": "en-US"
+    },
+    "audio": {
+        "uri":"gs://cloud-training/gsp323/task4.flac"
+    }
+  }
+
+
+curl -s -X POST -H "Content-Type: application/json" --data-binary @gsc-request.json \
+"https://speech.googleapis.com/v1/speech:recognize?key=${API_KEY}" > result.json
+
+
+
+gsutil cp result.json gs://qwiklabs-gcp-01-279e9408d5aa-marking/task4-gcs-290.result
