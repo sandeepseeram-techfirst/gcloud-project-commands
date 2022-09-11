@@ -58,3 +58,20 @@ ORDER BY
 LIMIT
   10
 
+
+#Random
+
+export BUCKET_NAME=qwiklabs-gcp-01-6063a3bc2782
+gsutil mb gs://$BUCKET_NAME/
+
+qwiklabs-gcp-01-6063a3bc2782:taxirides.realtime
+
+AIzaSyBCCyQJNVI4DZmeZvhSrbHwixg683Dfe1A
+
+export API_KEY=AIzaSyBCCyQJNVI4DZmeZvhSrbHwixg683Dfe1A
+
+
+#API Call 
+
+curl -s -X POST -H "Content-Type: application/json" --data-binary @request.json \
+"https://speech.googleapis.com/v1/speech:recognize?key=${API_KEY}"
